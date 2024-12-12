@@ -2,6 +2,7 @@
 @section('title', 'Dashboard | BridgeOfHope')
 
 @section('content')
+
 <section class="relative bg-gray-800 px-12 min-h-screen pb-32 ">
     <!-- Gambar Latar Belakang dengan Overlay -->
     <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30" 
@@ -62,15 +63,15 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto text-center">
                 <div class="bg-white border-2 border-indigo-600  p-4 rounded-md shadow">
                     <h3 class="font-medium text-gray-700">Total Donations</h3>
-                    <p class="text-xl font-bold text-indigo-600">$1,230</p>
+                    <p class="text-xl font-bold text-indigo-600">Rp{{ number_format($totalDonations, 0, ',', '.') }}</p>
                 </div>
                 <div class="bg-white border-2 border-indigo-600  p-4 rounded-md shadow">
                     <h3 class="font-medium text-gray-700">Total Projects</h3>
-                    <p class="text-xl font-bold text-indigo-600">5</p>
+                    <p class="text-xl font-bold text-indigo-600">{{ $totalProjects }}</p>
                 </div>
                 <div class="bg-white border-2 border-indigo-600  p-4 rounded-md shadow">
                     <h3 class="font-medium text-gray-700">Project Done</h3>
-                    <p class="text-xl font-bold text-indigo-600">2</p>
+                    <p class="text-xl font-bold text-indigo-600">{{ $projectsDone }}</p>
                 </div>
             </div>
         </div>
@@ -123,48 +124,61 @@
         </div>
     </section>
 
-    <!-- Highlight Projects -->
     <section class="my-6">
         <h2 class="text-xl font-semibold mb-4">Darurat</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($urgent as $data)
             <!-- Card Start -->
             <div class="bg-white p-4 rounded-lg relative" style="box-shadow: 15px 10px 15px -3px rgba(79, 70, 229, 0.7);">
                 <!-- Banner Image -->
-                <img src="header.png" alt="Project Image" class="w-full h-36 object-cover rounded-md">
-                
+                <img src="{{ asset('storage/' . $data->banner_image) }}" alt="Project Image" class="w-full h-36 object-cover rounded-md">
+    
                 <!-- Countdown Badge -->
+                @php
+                    $remainingDays = \Carbon\Carbon::parse($data->end_date)->diffInDays(\Carbon\Carbon::now());
+                @endphp
                 <div class="absolute top-2 left-2 bg-blue-100 text-blue-700 text-xs font-semibold py-1 px-2 rounded-md">
-                    14 hari lagi
+                    {{ $data->remaining_days > 0 ? $data->remaining_days . ' Hari Lagi' : 'Berakhir' }}
                 </div>
-                
+    
                 <!-- Pengirim -->
                 <div class="flex items-center mt-3">
-                    <p class="text-gray-600 text-sm">Salam Setara p</p>
-                    
+                    <p class="text-gray-600 text-sm">{{ $data->sender }}</p>
                 </div>
-                
+    
                 <!-- Project Title -->
                 <h3 class="mt-2 text-lg font-semibold text-indigo-600">
-                    Solidaritas Bantu Korban Letusan Gunung Lewotobi
+                    {{ $data->title }}
                 </h3>
-                
+    
                 <!-- Deskripsi -->
-                <p class="text-gray-600 text-sm mt-1">Bantu Warga Bangkit dan Bertahan</p>
-                
+                <p class="text-gray-600 text-sm mt-1">{{ $data->description }}</p>
+    
                 <!-- Indikator Terkumpul -->
                 <div class="mt-4">
                     <p class="text-gray-600 text-sm">Terkumpul</p>
-                    <p class="text-blue-600 font-semibold text-lg">Rp171.930.694</p>
+                    <p class="text-blue-600 font-semibold">Rp{{ number_format($data->collected_amount, 0, ',', '.') }}</p>
                     
                     <!-- Progress Bar -->
-                    <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
-                        <div class="bg-blue-600 h-2 rounded-full" style="width: 60%;"></div>
+                    @if ($data->goal_amount > 0)
+                    <div class="bg-blue-600 h-2 rounded-full" 
+                         style="width: {{ ($data->collected_amount / $data->goal_amount) * 100 }}%;">
                     </div>
+                @else
+                    <div class="bg-gray-400 h-2 rounded-full"></div>
+                @endif
+                
+                    
+
+                
+                
                 </div>
             </div>
             <!-- Card End -->
+            @endforeach
         </div>
     </section>
+    
 
 
     <section class="my-8">
@@ -200,86 +214,52 @@
         <!-- Heading -->
         <h2 class="text-xl font-semibold mb-4">Rekomendasi</h2>
         <div class="space-y-6">
-            <!-- Card 1 -->
-            <div class="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row">
-                <!-- Image -->
-                <img src="banjir.png" alt="Banjir" class="w-full sm:w-52 h-32 object-cover rounded-md mb-4 sm:mb-0">
-                
-                <!-- Content -->
-                <div class="flex flex-col justify-between flex-1 sm:ml-4">
-                    <h3 class="text-lg font-semibold text-indigo-700">Solidaritas Bantu Korban Banjir Bandang Ternate!</h3>
-                    <div class="text-gray-600 text-sm mt-1">Jagesbersama 
-                        <img src="verified.png" alt="Verified" class="inline-block w-4 h-4 ml-1">
-                    </div>
+            @foreach ($campaigns as $campaign)
+                <!-- Card -->
+                <div class="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row">
+                    <!-- Image -->
+                    <img src="{{ asset('storage/' . $campaign->banner_image) }}" alt="{{ $campaign->title }}" class="w-full sm:w-52 h-32 object-cover rounded-md mb-4 sm:mb-0">
                     
-                    <!-- Terkumpul dan Hari Tersisa -->
-                    <div class="mt-4">
-                        <p class="text-gray-600 text-sm">Terkumpul</p>
-                        <p class="text-blue-600 font-semibold">Rp168.753.797</p>
-                        
-                        <!-- Progress Bar -->
-                        <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: 60%;"></div>
+                    <!-- Content -->
+                    <div class="flex flex-col justify-between flex-1 sm:ml-4">
+                        <h3 class="text-lg font-semibold text-indigo-700">{{ $campaign->title }}</h3>
+                        <div class="text-gray-600 text-sm mt-1">
+                            {{ $campaign->organizer }}
+                            @if ($campaign->verified)
+                                <img src="{{ asset('images/verified.png') }}" alt="Verified" class="inline-block w-4 h-4 ml-1">
+                            @endif
                         </div>
                         
+                        <!-- Terkumpul dan Hari Tersisa -->
+                        <div class="mt-4">
+                            <p class="text-gray-600 text-sm">Terkumpul</p>
+                            <p class="text-blue-600 font-semibold">Rp{{ number_format($campaign->collected_amount, 0, ',', '.') }}</p>
+                            
+                            <!-- Progress Bar -->
+                            @if ($campaign->goal_amount > 0)
+                            <div class="bg-blue-600 h-2 rounded-full" 
+                                 style="width: {{ ($campaign->collected_amount / $campaign->goal_amount) * 100 }}%;">
+                            </div>
+                        @else
+                            <div class="bg-gray-400 h-2 rounded-full"></div>
+                        @endif
+                        
+                            
                         <div class="flex justify-between text-gray-500 text-sm mt-2">
                             <span>Terkumpul</span>
-                            <span>45 Hari</span>
+                            <span>
+                                {{ $campaign->remaining_days > 0 ? $campaign->remaining_days . ' Hari' : 'Berakhir' }}
+                            </span>
+                        </div>
+                        
+                        
                         </div>
                     </div>
                 </div>
-            </div>
-    
-            <!-- Card 2 -->
-            <div class="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row">
-                <img src="masjid.png" alt="Masjid" class="w-full sm:w-52 h-32 object-cover rounded-md mb-4 sm:mb-0">
-                
-                <div class="flex flex-col justify-between flex-1 sm:ml-4">
-                    <h3 class="text-lg font-semibold text-indigo-700">5 Tahun Tanpa Masjid, 164 Warga Ibadah di Lapangan</h3>
-                    <div class="text-gray-600 text-sm mt-1">Masjid Nusantara 
-                        <img src="verified.png" alt="Verified" class="inline-block w-4 h-4 ml-1">
-                    </div>
-    
-                    <div class="mt-4">
-                        <p class="text-gray-600 text-sm">Terkumpul</p>
-                        <p class="text-blue-600 font-semibold">Rp1.262.158.139</p>
-                        <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: 80%;"></div>
-                        </div>
-                        
-                        <div class="flex justify-between text-gray-500 text-sm mt-2">
-                            <span>Terkumpul</span>
-                            <span>135 Hari</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Card 3 -->
-            <div class="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row">
-                <img src="kebakaran.png" alt="Kebakaran" class="w-full sm:w-52 h-32 object-cover rounded-md mb-4 sm:mb-0">
-                
-                <div class="flex flex-col justify-between flex-1 sm:ml-4">
-                    <h3 class="text-lg font-semibold text-indigo-700">URGENT! Asap Tebal Kebakaran Hutan Kepung Kalbar!</h3>
-                    <div class="text-gray-600 text-sm mt-1">BAZNAS Hub 
-                        <img src="verified.png" alt="Verified" class="inline-block w-4 h-4 ml-1">
-                    </div>
-                    
-                    <div class="mt-4">
-                        <p class="text-gray-600 text-sm">Terkumpul</p>
-                        <p class="text-blue-600 font-semibold">Rp536.729.513</p>
-                        <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: 75%;"></div>
-                        </div>
-                        
-                        <div class="flex justify-between text-gray-500 text-sm mt-2">
-                            <span>Terkumpul</span>
-                            <span>45 Hari</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
+    </section>
+    
     
         <!-- Button Lihat Semua -->
         <div class="text-center mt-6">
@@ -300,47 +280,36 @@
             <a href="#" class="text-indigo-500 hover:underline">Lihat semua</a>
         </div>
         <div class="flex space-x-4 overflow-x-scroll">
-            <!-- Card Doa -->
-            <div class="flex-none bg-white shadow-lg rounded-lg p-4 w-72">
-                <div class="flex items-center mb-2">
-                    <img src="user-icon.png" alt="User Icon" class="w-10 h-10 rounded-full mr-3">
-                    <div>
-                        <h3 class="text-gray-700 font-semibold">Anonim</h3>
-                        <p class="text-sm text-gray-500">14 jam lalu</p>
+            @foreach ($comments as $comment)
+                <!-- Card Doa -->
+                <div class="flex-none bg-white shadow-lg rounded-lg p-4 w-72">
+                    <div class="flex items-center mb-2">
+                        <img src="{{ asset('user-icon.png') }}" alt="User Icon" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <!-- Ambil nama dari relasi user -->
+                            <h3 class="text-gray-700 font-semibold">{{ $comment->user->name }}</h3>
+                            <p class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        {{ Str::limit($comment->comment, 50) }} 
+                        @if (strlen($comment->comment) > 50)
+                            <a href="#" class="text-indigo-500 hover:underline">Lihat selengkapnya</a>
+                        @endif
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <button class="flex items-center space-x-2 text-gray-500 hover:text-red-500">
+                            <i class="fas fa-heart"></i>
+                            <span>Aamiin</span>
+                        </button>
                     </div>
                 </div>
-                <p class="text-gray-600 mb-4">
-                    Yang terbaik untuk keluarga ibu Suni. Semoga kedamaian yang... <a href="#" class="text-indigo-500 hover:underline">Lihat selengkapnya</a>
-                </p>
-                <div class="flex items-center justify-between">
-                    <button class="flex items-center space-x-2 text-gray-500 hover:text-red-500">
-                        <i class="fas fa-heart"></i>
-                        <span>Aamiin</span>
-                    </button>
-                </div>
-            </div>
-            <!-- Tambahkan lebih banyak card sesuai kebutuhan -->
-            <div class="flex-none bg-white shadow-lg rounded-lg p-4 w-72">
-                <div class="flex items-center mb-2">
-                    <img src="user-icon.png" alt="User Icon" class="w-10 h-10 rounded-full mr-3">
-                    <div>
-                        <h3 class="text-gray-700 font-semibold">Anonim</h3>
-                        <p class="text-sm text-gray-500">14 jam lalu</p>
-                    </div>
-                </div>
-                <p class="text-gray-600 mb-4">
-                    Semoga lekas sembuh... <a href="#" class="text-indigo-500 hover:underline">Lihat selengkapnya</a>
-                </p>
-                <div class="flex items-center justify-between">
-                    <button class="flex items-center space-x-2 text-gray-500 hover:text-red-500">
-                        <i class="fas fa-heart"></i>
-                        <span>Aamiin</span>
-                    </button>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+
+
 
 
 <section class="p-8 bg-gray-800 text-white">
@@ -350,32 +319,77 @@
         <!-- Sidebar Pertanyaan -->
         <div class="w-1/3 bg-gray-800 rounded-l-lg p-4">
             <ul class="space-y-4">
-                <li class="bg-indigo-700 p-3 rounded-md hover:bg-indigo-600">
-                    <button class="text-left w-full text-lg font-semibold text-indigo-200 focus:outline-none">Apa itu BridgeOfHope?</button>
+                <li>
+                    <button 
+                        class="faq-question block w-full text-left text-lg font-semibold text-indigo-200 p-3 rounded-md hover:bg-indigo-600 active:bg-indigo-700"
+                        data-target="faq-1">
+                        Apa itu BridgeOfHope?
+                    </button>
                 </li>
-                <li class="p-3 hover:bg-indigo-700 rounded-md">
-                    <button class="text-left w-full text-lg font-semibold text-indigo-200 focus:outline-none">Bagaimana cara berdonasi?</button>
+                <li>
+                    <button 
+                        class="faq-question block w-full text-left text-lg font-semibold text-indigo-200 p-3 rounded-md hover:bg-indigo-600 active:bg-indigo-700"
+                        data-target="faq-2">
+                        Bagaimana cara berdonasi?
+                    </button>
                 </li>
-                <li class="p-3 hover:bg-indigo-700 rounded-md">
-                    <button class="text-left w-full text-lg font-semibold text-indigo-200 focus:outline-none">Apakah donasi saya aman?</button>
-                </li>
-                <li class="p-3 hover:bg-indigo-700 rounded-md">
-                    <button class="text-left w-full text-lg font-semibold text-indigo-200 focus:outline-none">Bisakah saya membuat proyek penggalangan dana?</button>
-                </li>
-                <li class="p-3 hover:bg-indigo-700 rounded-md">
-                    <button class="text-left w-full text-lg font-semibold text-indigo-200 focus:outline-none">Apa metode pembayaran yang tersedia?</button>
+                <li>
+                    <button 
+                        class="faq-question block w-full text-left text-lg font-semibold text-indigo-200 p-3 rounded-md hover:bg-indigo-600 active:bg-indigo-700"
+                        data-target="faq-3">
+                        Apakah donasi saya aman?
+                    </button>
                 </li>
             </ul>
         </div>
 
         <!-- Konten Jawaban -->
         <div class="w-2/3 bg-gray-800 rounded-r-lg p-6">
-            <h3 class="text-xl font-bold mb-2">Apa itu BridgeOfHope?</h3>
-            <p class="text-indigo-100">
-                BridgeOfHope adalah platform penggalangan dana yang bertujuan untuk menghubungkan donatur dengan proyek-proyek sosial di berbagai bidang, seperti pendidikan, kesehatan, dan kesejahteraan masyarakat. Platform ini menyediakan cara mudah dan aman bagi pengguna untuk memberikan donasi dan melacak perkembangan proyek yang mereka dukung.
-            </p>
+            <div class="faq-answer" id="faq-1">
+                <h3 class="text-xl font-bold mb-2">Apa itu BridgeOfHope?</h3>
+                <p class="text-indigo-100">
+                    BridgeOfHope adalah platform penggalangan dana yang bertujuan untuk menghubungkan donatur dengan proyek-proyek sosial di berbagai bidang, seperti pendidikan, kesehatan, dan kesejahteraan masyarakat.
+                </p>
+            </div>
+            <div class="faq-answer hidden" id="faq-2">
+                <h3 class="text-xl font-bold mb-2">Bagaimana cara berdonasi?</h3>
+                <p class="text-indigo-100">
+                    Untuk berdonasi, pilih proyek yang ingin Anda dukung, klik tombol "Donasi Sekarang", dan ikuti langkah pembayaran.
+                </p>
+            </div>
+            <div class="faq-answer hidden" id="faq-3">
+                <h3 class="text-xl font-bold mb-2">Apakah donasi saya aman?</h3>
+                <p class="text-indigo-100">
+                    Ya, kami menggunakan sistem pembayaran yang terenkripsi untuk menjaga keamanan donasi Anda.
+                </p>
+            </div>
         </div>
     </div>
 </section>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const questions = document.querySelectorAll(".faq-question");
+        const answers = document.querySelectorAll(".faq-answer");
+
+        questions.forEach((question) => {
+            question.addEventListener("click", () => {
+                // Hapus semua kelas aktif dari tombol dan sembunyikan semua jawaban
+                questions.forEach((q) => q.classList.remove("bg-indigo-600", "text-white"));
+                answers.forEach((a) => a.classList.add("hidden"));
+
+                // Tambahkan kelas aktif ke tombol yang diklik
+                question.classList.add("bg-indigo-600", "text-white");
+
+                // Tampilkan jawaban yang sesuai
+                const targetId = question.dataset.target;
+                document.getElementById(targetId).classList.remove("hidden");
+            });
+        });
+    });
+</script>
+
+
 
 @endsection
