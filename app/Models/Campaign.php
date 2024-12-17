@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Campaign extends Model
 {
+    
     protected $dates = ['end_date'];
 
     public function getRemainingDaysAttribute()
@@ -19,4 +20,11 @@ class Campaign extends Model
         }
         return 0;
     }
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'campaign_id');
+    }
+    
+
 }

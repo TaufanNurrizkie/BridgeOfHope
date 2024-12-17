@@ -87,37 +87,37 @@
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 py-10">
                 <!-- Card 1 -->
                 <div class="flex flex-col items-center space-y-3">
-                    <img src="icon/donationLogo.png" alt="Donasi" class="w-20 h-20 object-contain">
+                    <img src="icon/donationLogo.png" alt="Donasi" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Donasi</p>
                 </div>
             
                 <!-- Card 2 -->
                 <div class="flex flex-col items-center space-y-3">
-                    <img src="icon/zakatLogo.png" alt="Zakat" class="w-20 h-20 object-contain">
+                    <img src="icon/zakatLogo.png" alt="Zakat" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Zakat</p>
                 </div>
             
                 <!-- Card 3 -->
                 <div class="flex flex-col items-center space-y-3">
-                    <img src="icon/fundLogo.png" alt="fund Dana" class="w-20 h-20 object-contain">
+                    <img src="icon/fundLogo.png" alt="fund Dana" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Galang Dana</p>
                 </div>
             
                 <!-- Card 4 -->
                 <div class="flex flex-col items-center space-y-3">
-                    <img src="icon/lingkunganLogo.png" alt="Program Lingkungan" class="w-20 h-20 object-contain">
+                    <img src="icon/lingkunganLogo.png" alt="Program Lingkungan" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Program Lingkungan</p>
                 </div>
             
                 <!-- Card 5 -->
                 <div class="flex flex-col items-center space-y-3">
-                    <img src="icon/beasiswaLogo.png" alt="beasiswa" class="w-20 h-20 object-contain">
+                    <img src="icon/beasiswaLogo.png" alt="beasiswa" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">beasiswa</p>
                 </div>
             
                 <!-- Card 6 dengan Label "BARU" -->
                 <div class="relative flex flex-col items-center space-y-3">
-                    <img src="icon/emergencyLogo.png" alt="Darurat" class="w-20 h-20 object-contain">
+                    <img src="icon/emergencyLogo.png" alt="Darurat" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Darurat</p>
                 </div>
             </div>
@@ -129,16 +129,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($urgent as $data)
             <!-- Card Start -->
-            <div class="bg-white p-4 rounded-lg relative" style="box-shadow: 15px 10px 15px -3px rgba(79, 70, 229, 0.7);">
+            <a href="{{ route('campaign.show', $data->id) }}" class="block bg-white p-4 rounded-lg relative transition-transform transform hover:scale-105" 
+               style="box-shadow: 15px 10px 15px -3px rgba(79, 70, 229, 0.7);">
                 <!-- Banner Image -->
                 <img src="{{ asset('storage/' . $data->banner_image) }}" alt="Project Image" class="w-full h-36 object-cover rounded-md">
     
                 <!-- Countdown Badge -->
-                @php
-                    $remainingDays = \Carbon\Carbon::parse($data->end_date)->diffInDays(\Carbon\Carbon::now());
-                @endphp
                 <div class="absolute top-2 left-2 bg-blue-100 text-blue-700 text-xs font-semibold py-1 px-2 rounded-md">
-                    {{ $data->remaining_days > 0 ? $data->remaining_days . ' Hari Lagi' : 'Berakhir' }}
+                    {{ $data->remainingDays > 0 ? $data->remainingDays . ' Hari Lagi' : 'Berakhir' }}
                 </div>
     
                 <!-- Pengirim -->
@@ -152,7 +150,7 @@
                 </h3>
     
                 <!-- Deskripsi -->
-                <p class="text-gray-600 text-sm mt-1">{{ $data->description }}</p>
+                <p class="text-gray-600 text-sm mt-1 line-clamp-2">{{ $data->description }}</p>
     
                 <!-- Indikator Terkumpul -->
                 <div class="mt-4">
@@ -161,49 +159,45 @@
                     
                     <!-- Progress Bar -->
                     @if ($data->goal_amount > 0)
-                    <div class="bg-blue-600 h-2 rounded-full" 
-                         style="width: {{ ($data->collected_amount / $data->goal_amount) * 100 }}%;">
+                    <div class="bg-gray-200 h-2 rounded-full mt-1">
+                        <div class="bg-blue-600 h-2 rounded-full" 
+                             style="width: {{ min(($data->collected_amount / $data->goal_amount) * 100, 100) }}%;">
+                        </div>
                     </div>
-                @else
-                    <div class="bg-gray-400 h-2 rounded-full"></div>
-                @endif
-                
-                    
-
-                
-                
+                    @else
+                    <div class="bg-gray-400 h-2 rounded-full mt-1"></div>
+                    @endif
                 </div>
-            </div>
+            </a>
             <!-- Card End -->
             @endforeach
         </div>
     </section>
-    
 
 
     <section class="my-8">
         <h2 class="text-xl font-semibold mb-6">Pilih Kategori Favoritmu</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <!-- Kategori 1 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition duration-200">
+            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/DisasterLogo.png" alt="Bencana Alam" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium">Bencana Alam</p>
             </div>
     
             <!-- Kategori 2 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition duration-200">
+            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/babyLogo.png" alt="Balita & Anak Sakit" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium text-center">Balita & Anak Sakit</p>
             </div>
     
             <!-- Kategori 3 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition duration-200">
+            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/medicineLogo.png" alt="Bantuan Medis & Kesehatan" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium text-center">Bantuan Medis & Kesehatan</p>
             </div>
     
             <!-- Kategori 4 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition duration-200">
+            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/otherLogo.png" alt="Lainnya" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium">Lainnya</p>
             </div>
@@ -216,49 +210,61 @@
         <div class="space-y-6">
             @foreach ($campaigns as $campaign)
                 <!-- Card -->
-                <div class="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row">
-                    <!-- Image -->
-                    <img src="{{ asset('storage/' . $campaign->banner_image) }}" alt="{{ $campaign->title }}" class="w-full sm:w-52 h-32 object-cover rounded-md mb-4 sm:mb-0">
-                    
-                    <!-- Content -->
-                    <div class="flex flex-col justify-between flex-1 sm:ml-4">
-                        <h3 class="text-lg font-semibold text-indigo-700">{{ $campaign->title }}</h3>
-                        <div class="text-gray-600 text-sm mt-1">
-                            {{ $campaign->organizer }}
-                            @if ($campaign->verified)
-                                <img src="{{ asset('images/verified.png') }}" alt="Verified" class="inline-block w-4 h-4 ml-1">
-                            @endif
-                        </div>
-                        
-                        <!-- Terkumpul dan Hari Tersisa -->
-                        <div class="mt-4">
-                            <p class="text-gray-600 text-sm">Terkumpul</p>
-                            <p class="text-blue-600 font-semibold">Rp{{ number_format($campaign->collected_amount, 0, ',', '.') }}</p>
-                            
-                            <!-- Progress Bar -->
-                            @if ($campaign->goal_amount > 0)
-                            <div class="bg-blue-600 h-2 rounded-full" 
-                                 style="width: {{ ($campaign->collected_amount / $campaign->goal_amount) * 100 }}%;">
+                <a href="{{ route('campaign.show', $campaign->id) }}" class="block transition-transform transform  hover:scale-105">
+                    <div class="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row items-center hover:shadow-lg transition-shadow duration-300">
+                        <!-- Image -->
+                        <img src="{{ asset('storage/' . $campaign->banner_image) }}" 
+                             alt="{{ $campaign->title }}" 
+                             class="w-full sm:w-48 h-32 object-cover rounded-md mb-4 sm:mb-0">
+    
+                        <!-- Content -->
+                        <div class="flex flex-col justify-between flex-1 sm:ml-4">
+                            <!-- Title -->
+                            <h3 class="text-lg font-semibold text-indigo-700">{{ $campaign->title }}</h3>
+    
+                            <!-- Organizer and Verified Badge -->
+                            <div class="text-gray-600 text-sm mt-1 flex items-center">
+                                {{ $campaign->organizer }}
+                                @if ($campaign->verified)
+                                    <img src="{{ asset('images/verified.png') }}" 
+                                         alt="Verified" 
+                                         class="inline-block w-4 h-4 ml-1">
+                                @endif
                             </div>
-                        @else
-                            <div class="bg-gray-400 h-2 rounded-full"></div>
-                        @endif
-                        
-                            
-                        <div class="flex justify-between text-gray-500 text-sm mt-2">
-                            <span>Terkumpul</span>
-                            <span>
-                                {{ $campaign->remaining_days > 0 ? $campaign->remaining_days . ' Hari' : 'Berakhir' }}
-                            </span>
-                        </div>
-                        
-                        
+    
+                            <!-- Collected Amount and Progress -->
+                            <div class="mt-4">
+                                <p class="text-gray-600 text-sm">Terkumpul</p>
+                                <p class="text-blue-600 font-semibold">
+                                    Rp{{ number_format($campaign->collected_amount, 0, ',', '.') }}
+                                </p>
+    
+                                <!-- Progress Bar -->
+                                @if ($campaign->goal_amount > 0)
+                                    <div class="w-full bg-gray-200 h-2 rounded-full mt-1">
+                                        <div class="bg-blue-600 h-2 rounded-full" 
+                                             style="width: {{ min(100, ($campaign->collected_amount / $campaign->goal_amount) * 100) }}%;">
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="bg-gray-400 h-2 rounded-full"></div>
+                                @endif
+                            </div>
+    
+                            <!-- Footer -->
+                            <div class="flex justify-between items-center text-gray-500 text-sm mt-4">
+                                <span>{{ $campaign->donations_count }} Donasi</span>
+                                <span>
+                                    {{ $campaign->remaining_days > 0 ? $campaign->remaining_days . ' Hari Tersisa' : 'Berakhir' }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
     </section>
+    
     
     
         <!-- Button Lihat Semua -->

@@ -10,6 +10,9 @@ Route::get('/', [PublicController::class, 'index'])->name('dashboard');
 Route::get('/about', function() {
     return view('public.about');
 })->name('about');
+Route::get('/detail/{id}', [PublicController::class, 'show'])->name('campaign.show');
+Route::post('/comment/{id}/like', [PublicController::class, 'like'])->name('comment.like');
+
 
 // Rute untuk Admin
 Route::middleware(['auth', 'admin'])->group(function () {

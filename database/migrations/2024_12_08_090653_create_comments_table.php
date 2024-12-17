@@ -13,6 +13,8 @@ class CreateCommentsTable extends Migration
             $table->foreignId('campaign_id')->constrained('campaigns')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('comment');
+            $table->unsignedInteger('likes')->default(0);
+            $table->json('liked_by_users')->nullable();
             $table->timestamps();
         });
     }
