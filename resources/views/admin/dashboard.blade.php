@@ -1,4 +1,4 @@
-@extends('layout.publicLayout') <!-- Mengacu pada layout utama yang Anda buat -->
+@extends('layout.adminLayout') <!-- Mengacu pada layout utama yang Anda buat -->
 @section('title', 'Dashboard | BridgeOfHope')
 
 @section('content')
@@ -74,8 +74,35 @@
                 </div>
             </div>
         </div>
-
-    
 </section>
+
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+    <!-- Pie Chart -->
+    <div class="bg-white p-4 rounded-lg shadow-md">
+
+        {!! $pieChart->container() !!}
+    </div>
+
+    <!-- Horizontal Bar Chart -->
+    <div class="bg-white p-4 rounded-lg shadow-md">
+
+        {!! $horizontalbarChart->container() !!}
+    </div>
+
+    <!-- Line Chart -->
+    <div class="bg-white p-4 rounded-lg shadow-md col-span-2">
+
+        {!! $lineChart->container() !!}
+    </div>
+</div>
+
+
+
+<!-- Script Section -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+{!! $pieChart->script() !!}
+{!! $horizontalbarChart->script() !!}
+{!! $lineChart->script() !!}
+</script>
 
 @endsection

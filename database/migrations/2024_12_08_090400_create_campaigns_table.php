@@ -12,6 +12,7 @@ class CreateCampaignsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->text('type');
             $table->string('banner_image');
             $table->decimal('goal_amount', 15, 2);
             $table->decimal('collected_amount', 15, 2)->default(0);

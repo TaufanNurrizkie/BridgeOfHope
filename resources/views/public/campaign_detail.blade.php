@@ -120,6 +120,8 @@
         </div>
         @endforeach
     </section>
+
+    
     </div>
 
     <!-- Footer -->
@@ -132,7 +134,8 @@
             <a href="#" class="bg-blue-600 text-white px-6 py-2 rounded-lg text-center font-semibold w-2/3">Donasi Sekarang</a>
         </div>
     </footer>
-    
+    <h3>Collected Amount: {{ number_format($campaign->collected_amount, 2) }}</h3>
+
 </div>
 
 <script>

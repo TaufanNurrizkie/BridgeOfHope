@@ -66,4 +66,10 @@ public function like($id, Request $request)
     return response()->json(['likes' => $comment->likes]);
 }
 
+public function allcampaign(){
+    $campaigns = Campaign::all();
+
+    return view('public.SemuaCampaign.allcampaign', compact('campaigns'));
+}
+
 }

@@ -26,3 +26,4 @@ class CreateDonationsTable extends Migration
     }
 }
 
+

@@ -261,20 +261,21 @@
                         </div>
                     </div>
                 </a>
+
             @endforeach
         </div>
     </section>
     
     
-    
+    <section>
         <!-- Button Lihat Semua -->
         <div class="text-center mt-6">
-            <button class="bg-white text-indigo-500 px-6 py-2 rounded-full hover:border-indigo-500 hover:border-2 transition duration-200 flex items-center justify-center space-x-2">
+            <a href="{{ route('all-campaign') }}" class="bg-white w-[200px] text-indigo-500 px-6 py-2 rounded-full hover:border-indigo-500 hover:border-2 transition duration-200 flex items-center justify-center space-x-2">
                 <span>Lihat semua</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M8 5v2h2V5zm4 4V7h-2v2zm2 2V9h-2v2zm0 2h2v-2h-2zm-2 2v-2h2v2zm0 0h-2v2h2zm-4 4v-2h2v2z"></path>
                 </svg>
-            </button>
+            </a>
         </div>        
     </section>   
 </div>
@@ -290,7 +291,7 @@
                 <!-- Card Doa -->
                 <div class="flex-none bg-white shadow-lg rounded-lg p-4 w-72">
                     <div class="flex items-center mb-2">
-                        <img src="{{ asset('user-icon.png') }}" alt="User Icon" class="w-10 h-10 rounded-full mr-3">
+                        <img src="{{ asset('icon/userLogo.png') }}" alt="User Icon" class="w-10 h-10 rounded-full mr-3">
                         <div>
                             <!-- Ambil nama dari relasi user -->
                             <h3 class="text-gray-700 font-semibold">{{ $comment->user->name }}</h3>
@@ -372,6 +373,7 @@
         </div>
     </div>
 </section>
+
 
 
 <script>
