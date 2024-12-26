@@ -1,4 +1,4 @@
-@extends('layout.detailLayout')
+@extends('layout.publicLayout')
 @section('title', 'About Us | BridgeOfHope')
 
 @section('content')

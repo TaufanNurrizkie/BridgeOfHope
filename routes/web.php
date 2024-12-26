@@ -7,6 +7,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\NotificationController;
 
 // Rute untuk Public
 Route::get('/', [PublicController::class, 'index'])->name('dashboard');
@@ -20,10 +21,18 @@ Route::get('/all-campaign', [PublicController::class, 'allcampaign'])->name('all
 
 // Rute untuk Admin
 Route::middleware(['auth', 'admin'])->group(function () {
+    //dashboard
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/list', [ListController::class, 'index'])->name('admin.list');
+
+    //List campaign tersedia
     Route::get('/list/create', [ListController::class, 'create'])->name('list.create');
     Route::post('/list/store', [ListController::class, 'store'])->name('list.store');
+
+    //notification
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/pengajuan/{id}', [NotificationController::class, 'show'])->name('pengajuan.show');
+
 
 });
 

@@ -30,6 +30,15 @@
 <!-- Form Section -->
 <section id="form-section" class="bg-indigo-100 py-16">
     <div class="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+
+        @if(session('success'))
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+        <p class="font-bold">Berhasil!</p>
+        <p>{{ session('success') }}</p>
+    </div>
+@endif
+
+
         <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Submit a Donation Project</h2>
         <p class="text-gray-600 mb-10 text-center">Your submission helps us build a better future. Fill out the form below to get started.</p>
 
