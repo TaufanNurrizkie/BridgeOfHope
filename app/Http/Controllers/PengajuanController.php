@@ -40,4 +40,32 @@ class PengajuanController extends Controller
         // Redirect back with a success message
         return redirect()->route('donations.index')->with('success', 'Pengajuan Berhasil dikirim');
     }
+
+    public function approve($id)
+{
+    // Cari pengajuan berdasarkan ID
+    $pengajuan = Pengajuan::findOrFail($id);
+
+    // Ubah status menjadi "approve"
+    $pengajuan->status = 'approved';
+    $pengajuan->save();
+
+    // Redirect ke halaman sebelumnya dengan pesan sukses
+    return redirect()->route('notifications.index')->with('success', 'Pengajuan berhasil disetujui.');
+}
+
+public function reject($id)
+{
+    // Cari pengajuan berdasarkan ID
+    $pengajuan = Pengajuan::findOrFail($id);
+
+    // Ubah status menjadi "reject"
+    $pengajuan->status = 'rejected';
+    $pengajuan->save();
+
+    // Redirect ke halaman sebelumnya dengan pesan sukses
+    return redirect()->route('notifications.index')->with('success', 'Pengajuan berhasil ditolak.');
+}
+
+
 }

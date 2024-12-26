@@ -1,5 +1,10 @@
 <!-- resources/views/layout.blade.php -->
 @vite('resources/css/app.css')
+@php
+$notificationCount = App\Models\Pengajuan::where('status', 'pending')
+                                         ->count();
+
+@endphp
 
 <body class="bg-gray-100 font-sans">
 
@@ -91,18 +96,32 @@
                 <!-- Middle Icon -->
                 <div class="absolute top-[-30px] left-1/2 transform -translate-x-1/2">
                     <a href="#" class="flex items-center justify-center bg-indigo-600 rounded-full border-8 border-[#1A1A1D] p-2 ">
-                        <img src="BridgeOfHopeLogo.png" alt="Logo" class="w-[50px] h-[50px] rounded-full  object-cover">
+                        <img src="{{ asset('BridgeOfHopeLogo.png') }}" alt="Logo" class="w-[50px] h-[50px] rounded-full  object-cover">
 
                     </a>
                 </div>
         
-                <a href="{{ route('notifications.index') }}" class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
-                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
-                        <!-- SVG for Pengajuan -->
-                        <path fill="currentColor" d="M18 2h-2v2h2zM4 4h6v2H4v14h14v-6h2v8H2V4zm4 8H6v6h6v-2h2v-2h-2v2H8zm4-2h-2v2H8v-2h2V8h2V6h2v2h-2zm2-6h2v2h-2zm4 0h2v2h2v2h-2v2h-2v2h-2v-2h2V8h2V6h-2zm-4 8h2v2h-2z"/>
-                    </svg>
+                <a href="{{ route('notifications.index') }}" class="relative flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
+                    <div class="relative">
+                        <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                            <!-- SVG for Pengajuan -->
+                            <path fill="currentColor" d="M14 4V2h-4v2H5v2h14V4zm5 12H5v-4H3v6h5v4h2v-4h4v2h-4v2h6v-4h5v-6h-2V6h-2v8h2zM5 6v8h2V6z"/>
+                        </svg>
+                
+                        <!-- Badge Notification -->
+                        @if($notificationCount > 0)
+                        <span class="absolute top-0 right-0 left-4 bottom-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                            {{ $notificationCount }}
+                        </span>
+                        @endif
+                    </div>
                     <span class="text-sm">Notif</span>
                 </a>
+                
+                
+                
+                
+                
                 <a href="/profile" wire:navigate class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
                     <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
                         <!-- SVG for Profile -->

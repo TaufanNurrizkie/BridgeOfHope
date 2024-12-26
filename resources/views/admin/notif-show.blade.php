@@ -1,18 +1,20 @@
-@extends('layout.publicLayout')
+@extends('layout.adminLayout')
 
 @section('title', $pengajuan->title . ' | BridgeOfHope')
 
 @section('content')
 <section class="py-16 bg-gray-100">
     <div class="max-w-4xl mx-auto px-6 bg-white rounded-lg shadow-lg p-8">
-        <h1 class="text-3xl font-bold text-indigo-700 mb-6">{{ $pengajuan->title }}</h1>
-
+        
         <!-- Project Image -->
-        @if ($pengajuan->image)
-            <div class="mb-6">
-                <img src="{{ asset('storage/' . $pengajuan->image) }}" alt="{{ $pengajuan->title }}" class="rounded-lg shadow-md w-full">
-            </div>
+        @if ($pengajuan->image_path)
+        <div class="mb-6">
+            <img src="{{ asset('storage/' . $pengajuan->image_path) }}" 
+            alt="{{ $pengajuan->title }}" 
+            class="rounded-lg shadow-md max-w-xl mx-auto h-auto">
+        </div>
         @endif
+        <h1 class="text-3xl font-bold text-indigo-700 mb-6">{{ $pengajuan->title }}</h1>
 
         <!-- Description -->
         <p class="text-gray-600 leading-relaxed mb-6">{{ $pengajuan->description }}</p>
@@ -49,11 +51,26 @@
                class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition duration-300">
                 Kembali
             </a>
-            <a href="#" 
-               class="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded-lg transition duration-300">
-                Donasi Sekarang
-            </a>
+        
+            <!-- Form untuk Approve -->
+            <form action="{{ route('pengajuan.approve', $pengajuan->id) }}" method="POST">
+                @csrf
+                <button type="submit" 
+                        class="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded-lg transition duration-300">
+                    Approve
+                </button>
+            </form>
+        
+            <!-- Form untuk Reject -->
+            <form action="{{ route('pengajuan.reject', $pengajuan->id) }}" method="POST">
+                @csrf
+                <button type="submit" 
+                        class="bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition duration-300">
+                    Reject
+                </button>
+            </form>
         </div>
+        
     </div>
 </section>
 @endsection

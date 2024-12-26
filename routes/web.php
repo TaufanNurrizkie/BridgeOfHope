@@ -32,6 +32,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //notification
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::get('/pengajuan/{id}', [NotificationController::class, 'show'])->name('pengajuan.show');
+    Route::post('/pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
+    Route::post('/pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+
+
 
 
 });

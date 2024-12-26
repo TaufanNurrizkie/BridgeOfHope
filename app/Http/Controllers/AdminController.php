@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
@@ -36,4 +37,6 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact('pieChart', 'horizontalbarChart', 'lineChart'));
     }
+
+
 }
