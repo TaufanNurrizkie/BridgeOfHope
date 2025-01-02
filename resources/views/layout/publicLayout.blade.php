@@ -91,17 +91,17 @@
                 <!-- Middle Icon -->
                 <div class="absolute top-[-30px] left-1/2 transform -translate-x-1/2">
                     <a href="#" class="flex items-center justify-center bg-indigo-600 rounded-full border-8 border-[#1A1A1D] p-2 ">
-                        <img src="BridgeOfHopeLogo.png" alt="Logo" class="w-[50px] h-[50px] rounded-full  object-cover">
+                        <img src="{{ asset('BridgeOfHopeLogo.png') }}" alt="Logo" class="w-[50px] h-[50px] rounded-full  object-cover">
 
                     </a>
                 </div>
         
-                <a href="/submission" class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
+                <a href="/mydonation" class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
                     <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
                         <!-- SVG for Pengajuan -->
-                        <path fill="currentColor" d="M18 2h-2v2h2zM4 4h6v2H4v14h14v-6h2v8H2V4zm4 8H6v6h6v-2h2v-2h-2v2H8zm4-2h-2v2H8v-2h2V8h2V6h2v2h-2zm2-6h2v2h-2zm4 0h2v2h2v2h-2v2h-2v2h-2v-2h2V8h2V6h-2zm-4 8h2v2h-2z"/>
+                        <path fill="currentColor" d="M9 2H5v2H3v2H1v6h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2V6h-2V4h-2V2h-4v2h-2v2h-2V4H9zm0 2v2h2v2h2V6h2V4h4v2h2v6h-2v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2H3V6h2V4z"/>
                     </svg>
-                    <span class="text-sm">Pengajuan</span>
+                    <span class="text-sm">Donasi saya</span>
                 </a>
                 <a href="/profile" wire:navigate class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
                     <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">

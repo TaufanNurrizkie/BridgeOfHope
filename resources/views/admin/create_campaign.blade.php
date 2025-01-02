@@ -32,9 +32,14 @@
                 <select name="type" id="type" 
                         class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:ring-indigo-500" required>
                     <option value="">Select type</option>
-                    <option value="Education">Education</option>
-                    <option value="Health">Health</option>
-                    <option value="Environment">Environment</option>
+                    <option value="donation">donation</option>
+                    <option value="zakat">zakat</option>
+                    <option value="galang">galang</option>
+                    <option value="lingkungan">lingkungan</option>
+                    <option value="beasiswa">beasiswa</option>
+                    <option value="bencana">bencana</option>
+                    <option value="anak">anak</option>
+                    <option value="medis">medis</option>
                 </select>
             </div>
 

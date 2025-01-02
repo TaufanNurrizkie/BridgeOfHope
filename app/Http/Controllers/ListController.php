@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ListController extends Controller
 {
@@ -61,38 +62,52 @@ class ListController extends Controller
     
         return redirect()->route('admin.list')->with('success', 'Campaign created successfully.');
     }
+
+    public function show($id)
+    {
+        // Ambil pengajuan berdasarkan ID
+        $campaign = Campaign::findOrFail($id);
+    
+        // Tampilkan ke view
+        return view('admin.list-show', compact('campaign'));
+    }
     
     
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function markAsComplete($id)
     {
-        //
+        $campaign = Campaign::findOrFail($id);
+        $campaign->status = 'completed'; // Pastikan sesuai dengan nilai status Anda
+        $campaign->save();
+    
+        return redirect()->back()->with('success', 'Campaign marked as complete.');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    
+    public function markAsCancelled($id)
     {
-        //
+        $campaign = Campaign::findOrFail($id);
+        $campaign->status = 'cancelled'; // Pastikan sesuai dengan nilai status Anda
+        $campaign->save();
+    
+        return redirect()->back()->with('success', 'Campaign marked as cancelled.');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $campaign = Campaign::findOrFail($id);
+    
+        // Jika ada file banner, hapus dari storage
+        if ($campaign->banner_image) {
+            Storage::delete($campaign->banner_image);
+        }
+    
+        $campaign->delete();
+    
+        return redirect()->route('admin.list')->with('success', 'Campaign deleted successfully.');
     }
+    
+    
 }

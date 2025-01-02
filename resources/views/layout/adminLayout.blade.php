@@ -78,7 +78,7 @@ $notificationCount = App\Models\Pengajuan::where('status', 'pending')
         
         <footer class="fixed bottom-0 left-0 w-full  bg-[#1A1A1D] z-50">
             <div class="flex justify-between items-center py-2 relative">
-                <a href="/" class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
+                <a href="/admin" class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
                     <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
                         <!-- SVG for Home -->
                         <path fill="currentColor" d="M14 2h-4v2H8v2H6v2H4v2H2v2h2v10h7v-6h2v6h7V12h2v-2h-2V8h-2V6h-2V4h-2zm0 2v2h2v2h2v2h2v2h-2v8h-3v-6H9v6H6v-8H4v-2h2V8h2V6h2V4z"/>
@@ -122,7 +122,7 @@ $notificationCount = App\Models\Pengajuan::where('status', 'pending')
                 
                 
                 
-                <a href="/profile" wire:navigate class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
+                <a href="/adminprofile" wire:navigate class="flex flex-col items-center flex-1 text-gray-400 hover:text-indigo-600">
                     <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
                         <!-- SVG for Profile -->
                         <path fill="currentColor" d="M15 2H9v2H7v6h2V4h6zm0 8H9v2h6zm0-6h2v6h-2zM4 16h2v-2h12v2H6v4h12v-4h2v6H4z"/></svg>

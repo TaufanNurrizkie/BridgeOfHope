@@ -14,12 +14,18 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
-    {
+    public function edit(Request $request) {
+        if (Auth::user()->role === 'admin') {
+            return view('profile.adminProfile', [
+                'user' => $request->user(),
+            ]);
+        }
+    
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
     }
+    
 
     /**
      * Update the user's profile information.
@@ -57,4 +63,6 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    
 }

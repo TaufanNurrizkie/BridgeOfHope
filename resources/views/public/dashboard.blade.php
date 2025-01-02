@@ -12,14 +12,8 @@
 
     <!-- Header dengan Search Bar dan Tombol Login -->
     <div class="relative z-20 flex justify-between items-center px-8 py-4">
-        <!-- Search Bar -->
-        <div class="flex-1 relative">
-            <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-500">
-            <!-- Search Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path fill="white" d="M6 2h8v2H6zM4 6V4h2v2zm0 8H2V6h2zm2 2H4v-2h2zm8 0v2H6v-2zm2-2h-2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2zm0-8h2v8h-2zm0 0V4h-2v2z"/>
-            </svg>
-        </div>
+        
+        
     
         <!-- Tombol Login -->
         @if (Route::has('login'))
@@ -35,12 +29,12 @@
                 Bridge of Hope: Seeking Financial Assistance for Natural Disaster Emergencies, Social Causes, and Others
             </h1>
             <div class="flex space-x-4">
-                <button class="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg shadow hover:bg-gray-200">
+                <a href="{{ route('donations.index') }}" class="px-6 py-3 border bg-white text-indigo-600 font-semibold rounded-lg shadow hover:bg-transparent hover:border-indigo-600">
                     Request Donation
-                </button>
-                <button class="px-6 py-3 border border-indigo-600 text-white font-semibold rounded-lg shadow hover:bg-gray-700">
+                </a>
+                <a href="/campaigns" class="px-6 py-3 border border-indigo-600 text-white font-semibold rounded-lg shadow hover:bg-gray-700">
                     Donate and Help
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -86,40 +80,40 @@
             <h2 class="text-xl font-semibold">Welcome back</h2>
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 py-10">
                 <!-- Card 1 -->
-                <div class="flex flex-col items-center space-y-3">
+                <a href="/campaigns/donation" class="flex flex-col items-center space-y-3">
                     <img src="icon/donationLogo.png" alt="Donasi" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Donasi</p>
-                </div>
+                </a >
             
                 <!-- Card 2 -->
-                <div class="flex flex-col items-center space-y-3">
+                <a href="/campaigns/zakat" class="flex flex-col items-center space-y-3">
                     <img src="icon/zakatLogo.png" alt="Zakat" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Zakat</p>
-                </div>
+                </a >
             
                 <!-- Card 3 -->
-                <div class="flex flex-col items-center space-y-3">
+                <a href="/campaigns/galang" class="flex flex-col items-center space-y-3">
                     <img src="icon/fundLogo.png" alt="fund Dana" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Galang Dana</p>
-                </div>
+                </a >
             
                 <!-- Card 4 -->
-                <div class="flex flex-col items-center space-y-3">
+                <a href="/campaigns/lingkungan" class="flex flex-col items-center space-y-3">
                     <img src="icon/lingkunganLogo.png" alt="Program Lingkungan" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Program Lingkungan</p>
-                </div>
+                </a >
             
                 <!-- Card 5 -->
-                <div class="flex flex-col items-center space-y-3">
+                <a href="/campaigns/beasiswa" class="flex flex-col items-center space-y-3">
                     <img src="icon/beasiswaLogo.png" alt="beasiswa" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">beasiswa</p>
-                </div>
+                </a >
             
                 <!-- Card 6 dengan Label "BARU" -->
-                <div class="relative flex flex-col items-center space-y-3">
+                <a href="/campaigns/urgent" class="relative flex flex-col items-center space-y-3">
                     <img src="icon/emergencyLogo.png" alt="Darurat" class="w-20 h-20 object-contain transition-transform transform  hover:scale-105">
                     <p class="text-gray-700 font-semibold">Darurat</p>
-                </div>
+                </a >
             </div>
         </div>
     </section>
@@ -179,28 +173,28 @@
         <h2 class="text-xl font-semibold mb-6">Pilih Kategori Favoritmu</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <!-- Kategori 1 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
+            <a href="/campaigns/bencana" class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/DisasterLogo.png" alt="Bencana Alam" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium">Bencana Alam</p>
-            </div>
+            </a>
     
             <!-- Kategori 2 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
+            <a href="/campaigns/anak" class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/babyLogo.png" alt="Balita & Anak Sakit" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium text-center">Balita & Anak Sakit</p>
-            </div>
+            </a>
     
             <!-- Kategori 3 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
+            <a href="/campaigns/medis" class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/medicineLogo.png" alt="Bantuan Medis & Kesehatan" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium text-center">Bantuan Medis & Kesehatan</p>
-            </div>
+            </a>
     
             <!-- Kategori 4 -->
-            <div class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
+            <a class="flex flex-col items-center bg-white p-4 rounded-xl  transition-transform transform  hover:scale-105">
                 <img src="icon/otherLogo.png" alt="Lainnya" class="w-16 h-16 mb-3">
                 <p class="text-gray-700 font-medium">Lainnya</p>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -270,7 +264,7 @@
     <section>
         <!-- Button Lihat Semua -->
         <div class="text-center mt-6">
-            <a href="{{ route('all-campaign') }}" class="bg-white w-[200px] text-indigo-500 px-6 py-2 rounded-full hover:border-indigo-500 hover:border-2 transition duration-200 flex items-center justify-center space-x-2">
+            <a href="/campaigns" class="bg-white w-[200px] text-indigo-500 px-6 py-2 rounded-full hover:border-indigo-500 hover:border-2 transition duration-200 flex items-center justify-center space-x-2">
                 <span>Lihat semua</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M8 5v2h2V5zm4 4V7h-2v2zm2 2V9h-2v2zm0 2h2v-2h-2zm-2 2v-2h2v2zm0 0h-2v2h2zm-4 4v-2h2v2z"></path>

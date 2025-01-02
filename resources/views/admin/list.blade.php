@@ -27,7 +27,14 @@
 <!-- Form Section -->
 <section id="form-section" class="bg-indigo-100 py-16">
     <div class="max-w-7xl mx-auto p-8 bg-white shadow-lg rounded-lg overflow-x-auto">
+        @if (session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+        {{ session('success') }}
+    </div>
+@endif
+
         <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Campaign</h2>
+        
         <div class="flex justify-end mb-4">
             <a href="{{ route('list.create') }}" 
                class="bg-blue-700 text-white w-[140px] text-center rounded p-2 transition duration-300 hover:bg-blue-800 focus:ring focus:ring-blue-500 focus:outline-none ">
@@ -75,8 +82,16 @@
                         <td class="border border-gray-300 px-4 py-2">{{ $campaign->creator->name ?? 'N/A' }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $campaign->status }}</td>
                         <td class="border border-gray-300 px-4 py-2 text-center">
-                            <a href="#" class="text-blue-600 hover:underline">Edit</a> |
-                            <a href="#" class="text-red-600 hover:underline">Delete</a>
+                            <a href="{{ route('list.show', $campaign->id) }}" class="text-blue-600 hover:underline">Edit</a> |
+                            <form action="{{ route('list.destroy', $campaign->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="text-red-600 hover:underline bg-transparent border-none cursor-pointer"
+                                        onclick="return confirm('Are you sure you want to delete this campaign?')">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty

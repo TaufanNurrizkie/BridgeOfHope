@@ -7,23 +7,18 @@ use Illuminate\Http\Request;
 
 class DonationController extends Controller
 {
-    public function store(Request $request, Campaign $campaign)
-    {
-        $request->validate([
-            'amount' => 'required|numeric|min:1',
-            'payment_method' => 'required|string',
-        ]);
-
-        $donation = Donation::create([
-            'campaign_id' => $campaign->id,
-            'user_id' => auth()->id(),
-            'amount' => $request->amount,
-            'payment_method' => $request->payment_method,
-            'transaction_id' => uniqid(),
-            'payment_status' => 'completed', // Anggap pembayaran langsung berhasil
-        ]);
-
-        return redirect()->route('campaigns.show', $campaign->id)
-                         ->with('success', 'Donation successful!');
+// app/Http/Controllers/DonationController.php
+public function markAsCompleted(Donation $donation)
+{
+    // Ensure the donation is in pending status
+    if ($donation->payment_status === 'pending') {
+        $donation->update(['payment_status' => 'completed']);
     }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Donation marked as completed successfully.'
+    ]);
+}
+
 }

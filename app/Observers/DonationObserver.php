@@ -8,14 +8,30 @@ class DonationObserver
 {
     public function created(Donation $donation)
     {
-        // Update collected_amount di tabel campaigns
-        $donation->campaign->increment('collected_amount', $donation->amount);
+        if ($donation->payment_status === 'completed') {
+            $donation->campaign->increment('collected_amount', $donation->amount);
+        }
     }
-
+    
+    public function updated(Donation $donation)
+    {
+        // Jika status pembayaran berubah menjadi 'completed', tambahkan ke collected_amount
+        if ($donation->wasChanged('payment_status') && $donation->payment_status === 'completed') {
+            $donation->campaign->increment('collected_amount', $donation->amount);
+        }
+        // Jika status pembayaran sebelumnya 'completed' dan sekarang berubah, kurangi collected_amount
+        elseif ($donation->wasChanged('payment_status') && $donation->getOriginal('payment_status') === 'completed') {
+            $donation->campaign->decrement('collected_amount', $donation->amount);
+        }
+    }
+    
     public function deleted(Donation $donation)
     {
-        // Kurangi collected_amount jika donasi dihapus
-        $donation->campaign->decrement('collected_amount', $donation->amount);
+        // Hanya kurangi jika donasi yang dihapus memiliki status pembayaran 'completed'
+        if ($donation->payment_status === 'completed') {
+            $donation->campaign->decrement('collected_amount', $donation->amount);
+        }
     }
+    
 }
 

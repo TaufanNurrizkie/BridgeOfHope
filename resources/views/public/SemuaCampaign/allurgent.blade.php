@@ -35,14 +35,11 @@
 
 <section class="my-6">
     <h2 class="text-xl font-semibold mb-4 text-center">
-        Campaign 
-        @if($type)
-            <span class="text-sm font-normal text-gray-500">({{ ucfirst($type) }})</span>
-        @endif
+        Campaign Urgent
     </h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        @foreach($campaigns as $data)
+        @foreach($urgent as $data)
         <!-- Card Start -->
         <a href="{{ route('campaign.show', $data->id) }}" class="block bg-white p-4 rounded-lg relative transition-transform transform hover:scale-105" 
            style="box-shadow: 15px 10px 15px -3px rgba(79, 70, 229, 0.7);">
